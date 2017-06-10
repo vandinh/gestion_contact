@@ -1,3 +1,4 @@
 class Tag < ApplicationRecord
-  belongs_to :id_contact
+  validates :name, :contact_id, presence: true
+  belongs_to :contact
 end
