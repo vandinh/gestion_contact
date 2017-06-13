@@ -1,0 +1,32 @@
+<div>
+  <div>
+    <h2 class="text-center">Liste des contacts</h2>
+  </div>
+<% if @contacts.empty? %>
+  <div class="bg-faded">
+    <p>Aucun contact</p>
+  </div>
+<% else %>
+  <div class="row">
+    <% @contacts.each do |contact| %>
+        <div class="card col-sm-2 my-2 ml-2 p-0">
+          <div class="bg-inverse w-100">
+            <%= image_tag contact.photo_url(:small), alt: contact.firstname + "'s photo", class: "rounded-0 photo mx-auto" %>
+          </div>
+          <div class="card-block">
+            <%= link_to contact_path(contact), {class: "card-close text-danger", method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer ce contact?'}} do %>
+              <i class="fa fa-times" aria-hidden="true"></i>
+            <% end %>
+            <h5 class="card-title mb-5"><%= contact.lastname %> <%= contact.firstname %></h5>
+            <%= link_to(contact_path(contact), class: "btn btn-primary card-view rounded-0") do %>
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            <% end %>
+            <%= link_to(edit_contact_path(contact), class: "btn btn-warning card-edit rounded-0") do %>
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+<% end %>
+</div>

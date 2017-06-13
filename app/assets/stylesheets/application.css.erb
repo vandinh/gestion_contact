@@ -10,6 +10,15 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
+ *= require_tree .
  */
+
+ @font-face{
+ 	font-family: 'Kaushan Script';
+ 	src: url(<%= asset_path 'KaushanScript-Regular.ttf' %>) format('truetype');
+ }
+
+section {
+	padding: 1.5rem;
+}

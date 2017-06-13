@@ -1,0 +1,66 @@
+<div>
+	<div>
+		<h2 class="text-center">Modifier un contact</h2>
+	</div>
+	<% if @contact.errors.any? %>
+	<div class="alert alert-danger" role="alert">
+	  <h4 class="alert-heading">
+	  	<%= pluralize(@contact.errors.count, "erreur") %>	  	
+	  </h4>
+	  <p>	  
+      <% @contact.errors.full_messages.each do |msg| %>
+        - <%= msg %>
+      <% end %>
+	  </p>
+	</div>
+  	<% end %>
+	<%= form_for @contact do |f| %>
+		<div class="form-group">
+			<label for="inputLastname">Nom<span class="text-danger">*</span></label>
+			<%= f.text_field :lastname, {class: "form-control", id: "inputLastname"} %>
+    </div>
+		<div class="form-group">
+			<label for="inputFirstname">Prénom<span class="text-danger">*</span></label>
+			<%= f.text_field :firstname, {class: "form-control", id: "inputFirstname"} %>
+    </div>
+    <%= image_tag @contact.photo_url(:medium), alt: "Photo de " + @contact.lastname + " " + @contact.firstname, class: "rounded photo mb-2" if @contact.photo? %>
+		<div class="form-group">
+			<label for="inputPhoto">Ajouter une photo</label> <i class="fa fa-download" aria-hidden="true"></i>
+      <%= f.file_field :photo, {class: "form-control-file", id: "inputPhoto"} %>
+    </div>
+    <div class="form-group">
+			<label for="inputBirthday">Date de naissance</label>
+			<div class="input-group">
+				<%= f.date_select :birthday, {
+					use_month_names: ['Janvier', 'Févier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juilliet', 'Août', 'Septembre', 'Octobre', 'Novembre','Décembre'],
+					order: [:day, :month, :year], 
+					prompt: { day: 'Jour', month: 'Mois', year: 'Année' }, 
+					start_year: Date.today.year - 5, end_year: Date.today.year - 100}, 
+					{class: "form-control custom-select customer-date", id: "inputBirthday"} 
+				%>
+	    </div>
+    </div>
+    <div class="form-group">
+			<label for="inputEmail">Email</label>
+			<div class="input-group">
+	  		<i class="fa fa-at input-group-addon" aria-hidden="true" id="emailHelp"></i>
+				<%= f.email_field :email, class: "form-control", id: "inputEmail", 'aria-describedby' => "emailHelp" %>
+	    </div>
+    </div>
+    <div class="form-group">
+			<label for="inputPhone">Téléphone</label>
+			<div class="input-group">
+	  		<i class="fa fa-phone input-group-addon" aria-hidden="true" id="phoneHelp"></i>
+				<%= f.telephone_field :phone, class: "form-control", id: "inputPhone", 'aria-describedby' => "phoneHelp" %>
+	    </div>
+    </div>
+    <div class="form-group">
+			<label for="inputAddress">Adresse</label>
+			<div class="input-group">
+	  		<i class="fa fa-address-card-o input-group-addon" aria-hidden="true" id="addressHelp"></i>
+				<%= f.text_field :address, class: "form-control", id: "inputAddress", 'aria-describedby' => "addressHelp" %>
+	    </div>
+    </div>
+    <%= f.submit "Modifier", class: "btn btn-primary" %>
+	<% end %>
+</div>

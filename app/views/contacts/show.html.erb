@@ -1,0 +1,66 @@
+<div>
+    <h2 class="text-center">Contact</h2>
+</div>
+<div class="row">
+    <% if @contact.nil? %>
+      <div class="bg-faded">
+        <p>Le contact n'a pas été trouvé</p>
+      </div>
+    <% else %>
+        <div class="col-sm-4">
+            <%= image_tag @contact.photo_url(:medium), alt: "Photo de " + @contact.lastname + " " + @contact.firstname, class: "rounded photo mb-2" %>
+            <%= form_for @contact, url: photo_contact_path, method: :post, :html => {:multipart => true} do |f| %>
+                <div class="form-group">
+                    <label for="inputPhoto">Ajouter une photo</label>
+                    <%= f.file_field :photo, {class: "form-control-file", id: "inputPhoto"} %>
+                </div>
+                <% if @contact.errors.any? %>
+                    <div class="alert alert-danger" role="alert">
+                        <p></p>
+                    </div>
+                <% end %>
+                <%= button_tag type: "submit", class: "btn btn-outline-info" do %>
+                    Upload <i class="fa fa-download" aria-hidden="true"></i>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="col-sm-8">
+            <h3>
+                <%= @contact.lastname %> <%= @contact.firstname %> 
+                <%= link_to(edit_contact_path(@contact), class: "btn btn-primary") do %>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                <% end %>
+            </h3>
+            <% unless @contact.tags.empty? %>
+                <p>Tags : 
+                    <% @contact.tags.each do |tag| %>
+                            <span class="badge badge-default"><%= tag.name %></span>
+                    
+                    <% end %>
+                </p>
+            <% end %>
+            <p>
+                <% unless @contact.email.empty? %>
+                    <i class="fa fa-at mr-2" aria-hidden="true"></i><%= @contact.email %><br/>
+                <% end %>
+                <% unless @contact.birthday.nil? %>
+                    <i class="fa fa-birthday-cake mr-2" aria-hidden="true"></i><%= @contact.birthday.strftime("%d/%m/%Y") %><br/>
+                <% end %>
+                <% unless @contact.phone.empty? %>
+                    <i class="fa fa-phone mr-2" aria-hidden="true"></i><%= @contact.phone %><br/>
+                <% end %>
+                <% unless @contact.address.empty? %>
+                    <i class="fa fa-envelope-o mr-2" aria-hidden="true"></i><%= @contact.address %><br/>
+                <% end %>
+            </p>
+        </div>
+        <div class="col-sm-12 mt-3">
+            <%= form_for [@contact, @contact.tags.build], html: {class: "form-inline my-2 my-lg-0"} do |f| %>
+                <%= f.text_field :name, {class: "form-control mr-sm-2", id: "inputTag", placeholder: "Ajouter un tag"} %>
+                <%= button_tag type: "submit", class: "btn btn-outline-danger my-2 my-sm-0" do %>
+                    <i id="add" class="fa fa-plus" aria-hidden="true"></i>
+                <% end %>
+            <% end %>
+        </div>
+    <% end %>
+</div>
