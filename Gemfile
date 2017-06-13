@@ -35,7 +35,8 @@ gem 'jbuilder', '~> 2.5'
 # This gem provides a simple and extremely flexible way to upload files from Ruby applications. It works well with Rack based web applications, such as Ruby on Rails.
 gem 'carrierwave', '~> 1.0'
 # Resize image
-gem 'mini_magick'
+#gem 'rmagick'
+#gem 'mini_magick'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

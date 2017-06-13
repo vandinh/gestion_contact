@@ -11,7 +11,7 @@
     <% @contacts.each do |contact| %>
         <div class="card col-sm-2 my-2 ml-2 p-0">
           <div class="bg-inverse w-100">
-            <%= image_tag contact.photo_url(:small), alt: contact.firstname + "'s photo", class: "rounded-0 photo mx-auto" %>
+            <%= image_tag contact.photo_url, alt: contact.firstname + "'s photo", class: "rounded-0 photo mx-auto" %>
           </div>
           <div class="card-block">
             <%= link_to contact_path(contact), {class: "card-close text-danger", method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer ce contact?'}} do %>

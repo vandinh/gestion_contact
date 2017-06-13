@@ -7,9 +7,9 @@
 	  <h4 class="alert-heading">
 	  	<%= pluralize(@contact.errors.count, "erreur") %>	  	
 	  </h4>
-	  <p>	  
-      <% @contact.errors.full_messages.each do |msg| %>
-        - <%= msg %>
+	  <p>
+      <% @contact.errors.each do |attr, error| %>
+        - <%= error %>
       <% end %>
 	  </p>
 	</div>
@@ -23,7 +23,7 @@
 			<label for="inputFirstname">Prénom<span class="text-danger">*</span></label>
 			<%= f.text_field :firstname, {class: "form-control", id: "inputFirstname"} %>
     </div>
-    <%= image_tag @contact.photo_url(:medium), alt: "Photo de " + @contact.lastname + " " + @contact.firstname, class: "rounded photo mb-2" if @contact.photo? %>
+    <%= image_tag @contact.photo_url, alt: "Photo de " + @contact.lastname + " " + @contact.firstname, class: "rounded photo mb-2" %>
 		<div class="form-group">
 			<label for="inputPhoto">Ajouter une photo</label> <i class="fa fa-download" aria-hidden="true"></i>
       <%= f.file_field :photo, {class: "form-control-file", id: "inputPhoto"} %>
