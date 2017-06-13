@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   root to: 'contacts#index'
 
   resources :contacts do
-    get '/search', on: :collection, action: 'search'
-    put '/photo', action: 'add_photo'
+    post '/photo', action: 'photo', on: :member
     resource :tags, only: :create
   end
 
+  get '/search', controller: 'contacts', action: 'search'
 end

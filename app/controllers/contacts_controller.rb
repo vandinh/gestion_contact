@@ -10,9 +10,9 @@ class ContactsController < ApplicationController
 
     def create
         @contact = Contact.new(contact_params)
- 
+
         if @contact.save
-            redirect_to @contact
+            redirect_to contacts_path
         else
             render 'new'
         end
@@ -43,39 +43,40 @@ class ContactsController < ApplicationController
         redirect_to contacts_path
     end
 
-    def add_photo
-        @contact = Contact.find(params[:contact_id])
+    def photo
+        @contact = Contact.find(params[:id])
 
-        if @contact.update(photo: params[:photo])            
+        if @contact.update(photo: params[:contact][:photo])
             redirect_to @contact
         else
-            render 'add_photo'
-        end
-    end
-
-    def add_tags
-        @contact = Contact.find(params[:contact_id])
-
-        if @contact.update(photo: params[:name])            
-            redirect_to @contact
-        else
-            render 'add_tags'
+            render 'show'
         end
     end
 
     def search
-        tags = params[:tags]
-        tags.each do |tag|
+        @contacts = Contact.search(params[:q])
 
-        end
-        @contact = Contact.includes(:tags).where(tags: {name: tag})
-
-        @contact.each do |
+        render 'index'
     end
     
     private
         def contact_params
-            params.require(:contact).permit(:firsname, :lastname, :birthday, :address, )
+            params.require(:contact).permit(:firstname, :lastname, :birthday, :email, :phone, :address, :photo)
+        end
+
+        def upload
+            uploaded_io = params[:contact][:photo]
+            File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+                file.write(uploaded_io.read)
+            end
+        end
+
+        def set_photo contact
+            if contact.photo.nil? || contact.photo.empty?
+                contact.photo = "contact/default.png"
+            else
+                contact.photo = "contact/" + contact.id + "/" + contact.photo
+            end
         end
 
 end
